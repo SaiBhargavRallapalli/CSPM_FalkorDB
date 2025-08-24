@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    container_name: falkordb
+    ports:
+      - "6379:6379"
+
+  browser:
+    image: falkordb/falkordb-browser:latest
+    container_name: falkordb-browser
+    ports:
+      - "3000:3000"
+    environment:
+      # Important on Mac: use the *service name* falkordb, not localhost
+      FALKORDB_HOST: falkordb
+      FALKORDB_PORT: 6379
+      FALKORDB_TLS: "false"
+    depends_on:
+      - falkordb
